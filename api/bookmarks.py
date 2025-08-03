@@ -40,7 +40,6 @@ def read_items(*, db: SessionDep) -> Any:
     st = select(BookMarks)
 
     bookmarks = db.execute(st).scalars().all()
-    print(bookmarks)
     bookmarks = [BookmarkPublic(**row.__dict__) for row in bookmarks]
     return BookmarksPublic(data=bookmarks, count=count)
 

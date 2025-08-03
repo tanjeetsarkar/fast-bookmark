@@ -2,13 +2,14 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from core.config import settings
 
-SQLLITE_DB = "bookmarks.db"
+SQLLITE_DB = settings.LOCAL_DB
 
-engine = create_engine(f"sqlite:///{SQLLITE_DB}", echo=True)
+engine = create_engine(f"sqlite:///{SQLLITE_DB}")
 
 def get_db():
-    with Session(engine) as session:
+    with Session(engine, autocommit=False, autoflush=False) as session:
         yield session
 
 
